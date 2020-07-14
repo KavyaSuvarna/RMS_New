@@ -5,6 +5,7 @@ import com.sample.rms.RateRepository;
 import com.sample.rms.service.RateService;
 import com.sample.rms.service.RateServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +26,13 @@ public class RMSController {
 
     @PostMapping(path="/add")
     public @ResponseBody
-    void addRate(@RequestBody Rate rate) {
-        rateService.addRate(rate);
+    ResponseEntity<Rate> addRate(@RequestBody Rate rate) {
+        return rateService.addRate(rate);
     }
 
     @DeleteMapping(path="/delete/{id}")
     public @ResponseBody
-    void deleteRate(@PathVariable Long id){
-        rateService.deleteRate(id);
+    ResponseEntity<String> deleteRate(@PathVariable Long id){
+        return rateService.deleteRate(id);
     }
-
 }

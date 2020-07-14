@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RateListComponent implements OnInit {
     rates: Observable<Rate[]>;
+    error:String;
 
   constructor(private rateService: RateService,
     private router: Router) { }
@@ -20,7 +21,7 @@ export class RateListComponent implements OnInit {
   }
 
   reloadData(){
-    this.rates = this.rateService.getRateList();
+    this.rates = this.rateService.getRateList()
   }
 
   deleteRate(id: number){

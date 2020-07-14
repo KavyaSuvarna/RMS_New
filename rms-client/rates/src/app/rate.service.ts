@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class RateService {
   constructor(private http:HttpClient) { }
 
   getRate(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`)
+    .pipe(catchError(this.handleError));
   }
 
   createRate(rate: Object): Observable<Object> {
@@ -28,6 +30,11 @@ export class RateService {
   }
 
   getRateList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/all`);
+    return this.http.get(`${this.baseUrl}/all`)
+    .pipe(catchError(this.handleError));
+  }
+
+  handleError(error: Error){
+    return throwError(error.message || "server error");
   }
 }
